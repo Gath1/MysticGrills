@@ -9,34 +9,17 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import view.RegisterView;
 
 public class RegisterController {
 	
-	public static StackPane root;
+	private RegisterView RegisterView;
+
+	public RegisterController(RegisterView View){
+		this.RegisterView = View;
+	}
+		
 	
-	Label usernameLbl, emailLbl, passwordLbl,confpassLbl;
-	TextField userTxt, emailTxt; 
-	PasswordField passwordTxt, confpassTxt;
-	VBox form, usernamePane, emailPane, passwordPane, confpassPane;
-	
-	void makeForm() {
-		usernameLbl = new Label("Name");
-		userTxt = new TextField();
-		
-		emailLbl = new Label("Email");
-		emailTxt = new TextField();
-		
-		passwordLbl = new Label("Password");
-		passwordTxt = new PasswordField();
-		
-		confpassLbl = new Label("ConfirmPassword");
-		confpassTxt = new PasswordField(); 
-		
-		usernamePane = new VBox();
-		usernamePane.getChildren().addAll(usernameLbl, userTxt);
-		
-		
-		
 	}
 	
 	
@@ -45,6 +28,3 @@ public class RegisterController {
 	
 	
 	
-	
-	
-}
