@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,20 +26,7 @@ public class LoginView {
 	private PasswordField passwordTF = new PasswordField();	
 	private Button loginButton = new Button("Login");
 	private Button registerButton = new Button("Register");
-	
-	public LoginView(Stage stage){
-		
-		VBox root = new VBox();
-				
-		GridPane form = createLoginForm();
-		VBox.setMargin(form, new Insets(20));
-		root.getChildren().addAll(form);
-		
-		Scene scene = new Scene(root, 500, 250);
-		stage.setScene(scene);
-		stage.setTitle("Mystic Grills");
-		stage.show();
-	}
+	private static VBox vbox, RegisterLayout;
 	
 	private GridPane createLoginForm() {
 		GridPane form = new GridPane();
@@ -52,10 +40,34 @@ public class LoginView {
 		form.add(loginButton, 0, 2);
 		form.add(registerButton, 1, 2);
 	
+		getLoginButton().setOnMouseClicked(e->{
+			RegisterView.root.getChildren().clear();
+//			RegisterView.root.getChildren().add(moveToLogin());
+//			root.getChildren().add()
+		});
+		
 		
 		return form;
 	}
 
+	public LoginView(Stage stage){
+		
+		vbox = new VBox();
+		
+		GridPane form = createLoginForm();
+		VBox.setMargin(form, new Insets(20));
+		vbox.getChildren().addAll(form);
+		
+		RegisterView.root = new StackPane();
+		RegisterView.root.getChildren().add(vbox);
+		
+		Scene scene = new Scene(RegisterView.root, 500, 250);
+		stage.setScene(scene);
+		stage.setTitle("Mystic Grills");
+		stage.show();
+	}
+	
+	
 	public TextField getEmailTF() {
 		return emailTF;
 	}

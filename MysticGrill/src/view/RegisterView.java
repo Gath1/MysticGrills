@@ -9,8 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.Main;
 
 public class RegisterView{
 	
@@ -18,22 +20,9 @@ public class RegisterView{
 	private TextField emailTxt = new TextField();
 	private PasswordField passwordTxt = new PasswordField();
 	private PasswordField confpassTxt = new PasswordField();
-	private Button registerButton = new Button("Register");
-	
-	
-	public RegisterView(Stage primaryStage) {	
-		
-		VBox root = new VBox();
-		
-		GridPane form = editComponent();
-		VBox.setMargin(form, new Insets(20));
-		root.getChildren().addAll(form);
-		
-		Scene scene = new Scene(root, 500,250);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("Mystic Grills");
-		primaryStage.show();
-	}
+	private static Button registerButton = new Button("Register");
+	private static VBox vbox, LoginLayout;
+	static StackPane root;
 	
 	public GridPane editComponent() {	
 		GridPane form = new GridPane();
@@ -50,9 +39,42 @@ public class RegisterView{
 		form.add(confpassTxt, 1, 3);	
 		form.add(registerButton, 1, 4);
 		
+		getRegisterButton().setOnMouseClicked(e->{
+			System.out.println("You Have Register Your Account");
+			root.getChildren().clear();
+			root.getChildren().add(moveToLogin());
+		});
+		
 		return form;
 	}
+	
+	static VBox moveToLogin() {
+		LoginLayout = new VBox();
+		Label LoginLbl = new Label("Login");
+		LoginLayout.getChildren().add(LoginLbl);
+		
+		return LoginLayout;
+	}
+	
 
+	public RegisterView(Stage primaryStage) {	
+		
+		vbox = new VBox();
+		
+		GridPane form = editComponent();
+		VBox.setMargin(form, new Insets(20));
+		vbox.getChildren().addAll(form);
+		
+		root = new StackPane();
+		root.getChildren().add(vbox);
+		
+		Scene scene = new Scene(root, 500,250);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Mystic Grills");
+		primaryStage.show();
+	}
+	
+	
 	public TextField getUserTxt() {
 		return userTxt;
 	}
