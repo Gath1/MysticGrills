@@ -15,11 +15,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
-import controller.Controller;
+import view.RegisterView;
+import controller.LoginController;
 
 public class LoginView {
 	
@@ -27,19 +27,28 @@ public class LoginView {
 	private PasswordField passwordTF = new PasswordField();	
 	private Button loginButton = new Button("Login");
 	private Button registerButton = new Button("Register");
+	private static VBox vbox, LoginLayout, RegisterLayout;
+	private LoginController loginController;
+	
+	static StackPane root;
 	
 	public LoginView(Stage stage){
 		
 		VBox root = new VBox();
+		
+//		LoginView loginView = new LoginView(stage);
+//		Scene loginScene = new Scene(loginView.getVBox(), 400, 300);
+//		stage.setScene(loginScene);
 				
 		GridPane form = createLoginForm();
 		VBox.setMargin(form, new Insets(20));
 		root.getChildren().addAll(form);
 		
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root, 500, 250);
 		stage.setScene(scene);
 		stage.setTitle("Mystic Grills");
 		stage.show();
+		
 	}
 	
 	private GridPane createLoginForm() {
@@ -53,10 +62,10 @@ public class LoginView {
 		form.add(passwordTF, 1, 1);
 		form.add(loginButton, 0, 2);
 		form.add(registerButton, 1, 2);
-	
 		
 		return form;
 	}
+	
 
 	public TextField getEmailTF() {
 		return emailTF;
