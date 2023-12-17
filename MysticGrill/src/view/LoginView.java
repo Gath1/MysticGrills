@@ -29,9 +29,9 @@ public class LoginView {
 	private Button registerButton = new Button("Register");
 	private VBox actionBox = new VBox(20);
 	
-	private BorderPane borderCnt;
-	private GridPane gridCnt;
-	private FlowPane flowCnt;
+	private BorderPane borderCnt = new BorderPane();
+	private GridPane gridCnt = new GridPane();
+	private FlowPane flowCnt = new FlowPane();
 	
 	Scene sc;
 	

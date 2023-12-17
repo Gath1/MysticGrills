@@ -44,15 +44,14 @@ public class RegisterView{
 		gridCnt.add(passwordTxt, 1, 2);
 		gridCnt.add(new Label("ConfirmPassword : "), 0, 3);
 		gridCnt.add(confpassTxt, 1, 3);	
-		gridCnt.add(registerButton, 1, 4);
 		
 		sc = new Scene(borderCnt, 500, 500);
 	}
 	
 	private void setComponent() {
-		borderCnt.setAlignment(gridCnt, Pos.CENTER);
+		BorderPane.setAlignment(gridCnt, Pos.CENTER);
 		
-		borderCnt.setMargin(actionBox, new Insets(10));
+		BorderPane.setMargin(actionBox, new Insets(10));
 		actionBox.setAlignment(Pos.CENTER);
 		
 		gridCnt.setAlignment(Pos.CENTER);
@@ -116,6 +115,46 @@ public class RegisterView{
 
 	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
+	}
+
+	public Button getLoginButton() {
+		return loginButton;
+	}
+
+	public void setLoginButton(Button loginButton) {
+		this.loginButton = loginButton;
+	}
+
+	public VBox getActionBox() {
+		return actionBox;
+	}
+
+	public void setActionBox(VBox actionBox) {
+		this.actionBox = actionBox;
+	}
+
+	public BorderPane getBorderCnt() {
+		return borderCnt;
+	}
+
+	public void setBorderCnt(BorderPane borderCnt) {
+		this.borderCnt = borderCnt;
+	}
+
+	public GridPane getGridCnt() {
+		return gridCnt;
+	}
+
+	public void setGridCnt(GridPane gridCnt) {
+		this.gridCnt = gridCnt;
+	}
+
+	public FlowPane getFlowCnt() {
+		return flowCnt;
+	}
+
+	public void setFlowCnt(FlowPane flowCnt) {
+		this.flowCnt = flowCnt;
 	}
 
 	

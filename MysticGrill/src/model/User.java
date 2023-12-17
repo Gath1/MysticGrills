@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import controller.LoginController;
 import controller.RegisterController;
 import database.Connect;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 public class User {
@@ -29,22 +31,20 @@ public class User {
 	
 	public static ArrayList<User> getAllUser(){
 		ArrayList<User> users = new ArrayList<>();
-//		Connect con = Connect.getInstance();
 		String query = "Select * FROM users";
 		ResultSet rs = Connect.getConnection().executeQuery(query);
 		
 		try {
 			while(rs.next()) {
 				String userID = rs.getString(1);
-				String username = rs.getString(2);
-				String email = rs.getString(3);
-				String password = rs.getString(4);
-				String confirmPassword = rs.getString(5);	
+				String userRole = rs.getString(2);
+				String username = rs.getString(3);
+				String email = rs.getString(4);
+				String password = rs.getString(5);
 				
-				users.add(new User(userID, username, email, password, confirmPassword));
+				users.add(new User(userID, userRole, username, email, password));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -78,27 +78,68 @@ public class User {
 			ps.setString(1, email);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
-//			
-//			if(rs.next()) {
-//				String Roleuser = rs.getString("userRole");
-//				LoginController.displayUserRole(Roleuser);
-//			}
-//			else {
-//				showAlert("Your role cant be found");
-//			}
-//			
+			
+			if(rs.next()) {
+				String userRole = rs.getString("userRole");
+				LoginController.showUserRole(userRole);
+			}
+			else {
+				showAlert("Your role cant be found");
+			}
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
+	public static void Userinsert(String userRole, String username, String email) {
+		String query = "INSERT INTO users (userRole, username, email) VALUES (?, ?, ?)";
+		try(PreparedStatement ps = Connect.getConnection().prepareStatement(query)){
+			ps.setString(1, userRole);
+			ps.setString(2, username);
+			ps.setString(3, email);
+			ps.executeUpdate();
+			showAlert("You data have been inserted.");
+		}catch (SQLException e) {
+			e.printStackTrace();
+			showAlert("Your data failed to be inserted");
+		}
+	}
 	
+	public static void Userupdate(String userRole, String username, String email) {
+		String query ="UPDATE users SET userRole = ?, email = ? WHERE username = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			
+			ps.setString(1, userRole);
+			ps.setString(2, email);
+			ps.setString(3, username);
+			ps.execute();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	
+	public static void deleteUser(String username) {
+		String query ="DELETE FROM users WHERE username = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setString(1, username);
+			ps.execute();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	private static void showAlert(String string) {
-		// TODO Auto-generated method stub
+	private static void showAlert(String notif) {
+		Alert warn = new Alert(AlertType.INFORMATION);
+		warn.setTitle("Notification");
+		warn.setHeaderText(null);
+		warn.setContentText(notif);
+		warn.showAndWait();
 		
 	}
 

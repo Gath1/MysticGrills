@@ -21,12 +21,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		LoginView loginView = new LoginView(primaryStage);
     	LoginController logC = new LoginController(loginView, null);
-		
-//		RegisterView registerView = new RegisterView(primaryStage);
-//		RegisterController registerController = new RegisterController(registerView);
-//		loginView = new LoginView(primaryStage);
-//		primaryStage.show();
-//					
+			
 	}
 
 }

@@ -32,7 +32,7 @@ public class RegisterController {
 		
 	private void setButtonHandlers() {
 		registerView.getRegisterButton().setOnAction(e -> insertHandler());
-		
+		registerView.getLoginButton().setOnAction(e -> movetoLogin());
 	}
 
 	public static void movetoLogin() {
