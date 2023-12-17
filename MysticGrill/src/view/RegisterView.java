@@ -1,6 +1,7 @@
 package view;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,65 +17,67 @@ import main.Main;
 
 public class RegisterView{
 	
+	Scene sc;
 	private TextField userTxt = new TextField();
 	private TextField emailTxt = new TextField();
 	private PasswordField passwordTxt = new PasswordField();
 	private PasswordField confpassTxt = new PasswordField();
-	private static Button registerButton = new Button("Register");
-	private static VBox vbox, LoginLayout;
-	static StackPane root;
+	private Button registerButton = new Button("Register");
+	private Button loginButton = new Button("Login");
+	private VBox actionBox = new VBox(20);
 	
-	public GridPane editComponent() {	
-		GridPane form = new GridPane();
-		form.setVgap(20);
-		form.setHgap(10);
+	private BorderPane borderCnt = new BorderPane();
+	private GridPane gridCnt = new GridPane();
+	private FlowPane flowCnt = new FlowPane();
+	
+	
+	private void editComponent() {	
+		actionBox.getChildren().addAll(registerButton, loginButton);
+		borderCnt.setCenter(gridCnt);
+		borderCnt.setBottom(actionBox);
 		
-		form.add(new Label("Username : "), 0, 0);
-		form.add(userTxt, 1, 0);
-		form.add(new Label("Email : "), 0, 1);
-		form.add(emailTxt, 1, 1);
-		form.add(new Label("Password : "), 0, 2);
-		form.add(passwordTxt, 1, 2);
-		form.add(new Label("ConfirmPassword : "), 0, 3);
-		form.add(confpassTxt, 1, 3);	
-		form.add(registerButton, 1, 4);
+		gridCnt.add(new Label("Username : "), 0, 0);
+		gridCnt.add(userTxt, 1, 0);
+		gridCnt.add(new Label("Email : "), 0, 1);
+		gridCnt.add(emailTxt, 1, 1);
+		gridCnt.add(new Label("Password : "), 0, 2);
+		gridCnt.add(passwordTxt, 1, 2);
+		gridCnt.add(new Label("ConfirmPassword : "), 0, 3);
+		gridCnt.add(confpassTxt, 1, 3);	
+		gridCnt.add(registerButton, 1, 4);
 		
-		getRegisterButton().setOnMouseClicked(e->{
-			System.out.println("You Have Register Your Account");
-			root.getChildren().clear();
-			root.getChildren().add(moveToLogin());
-		});
-		
-		return form;
+		sc = new Scene(borderCnt, 500, 500);
 	}
 	
-	static VBox moveToLogin() {
-		LoginLayout = new VBox();
-		Label LoginLbl = new Label("Login");
-		LoginLayout.getChildren().add(LoginLbl);
+	private void setComponent() {
+		borderCnt.setAlignment(gridCnt, Pos.CENTER);
 		
-		return LoginLayout;
+		borderCnt.setMargin(actionBox, new Insets(10));
+		actionBox.setAlignment(Pos.CENTER);
+		
+		gridCnt.setAlignment(Pos.CENTER);
+		gridCnt.setVgap(10);
+		
 	}
 	
 
-	public RegisterView(Stage primaryStage) {	
+	public RegisterView(Stage stage) {	
+		editComponent();
+		setComponent();
 		
-		vbox = new VBox();
-		
-		GridPane form = editComponent();
-		VBox.setMargin(form, new Insets(20));
-		vbox.getChildren().addAll(form);
-		
-		root = new StackPane();
-		root.getChildren().add(vbox);
-		
-		Scene scene = new Scene(root, 500,250);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("Mystic Grills");
-		primaryStage.show();
+		stage.setScene(sc);
+		stage.setResizable(false);
+		stage.show();
 	}
 	
-	
+	public Scene getSc() {
+		return sc;
+	}
+
+	public void setSc(Scene sc) {
+		this.sc = sc;
+	}
+
 	public TextField getUserTxt() {
 		return userTxt;
 	}
@@ -114,6 +117,6 @@ public class RegisterView{
 	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
 	}
-	
+
 	
 }

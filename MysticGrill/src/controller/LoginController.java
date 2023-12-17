@@ -4,65 +4,57 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.stage.Stage;
+import model.User;
 import view.LoginView;
+import view.RegisterView;
 
 public class LoginController {
 	
-	private ObservableList<String> registeredEmails = FXCollections.observableArrayList();
-	 
-	private LoginView loginView;
+	private ObservableList<User> users = FXCollections.observableArrayList();
+	private static LoginView loginView;
 	
-	public LoginController(LoginView view) {
+	public LoginController(LoginView view, ObservableList<User> users) {
 		this.loginView = view;
-		validateLoginForm();
+		setButtonHandlers();
 	}
-	
-	public boolean validateLoginForm() {
-	        
-	    System.out.println("Email: " + loginView.getEmailTF());
-	    System.out.println("Password: " + loginView.getPasswordTF());
-
-	    if (loginView.getEmailTF().getText().isEmpty() || loginView.getPasswordTF().getText().isEmpty()) {
-	    	 return false;
-	    }
-	        	
-//	       // Simulated database check
-//	       if (!userDatabase.containsKey(email) || !userDatabase.get(email).equals(password)) {
-//	           // Invalid email or password
-//	           return false;
-//	       }
-
-	    return true;
-	 }
 	
 	private void setButtonHandlers() {
         loginView.getLoginButton().setOnAction(event -> handleLogin());
-//        loginView.getRegisterButton().setOnAction(event -> handleRegister());
+        loginView.getRegisterButton().setOnAction(event -> movetoRegister());
     }
 	
 	private void handleLogin() {
-        String email = loginView.getEmailTF().getText();
-        String password = loginView.getPasswordTF().getText();
-
-        // Call the login method in the controller
-        boolean loginSuccessful = login(email, password);
-
-        if (loginSuccessful) {
-            System.out.println("Login successful!");
-            // Add logic to navigate to the next scene or perform other actions
-        } else {
-            System.out.println("Login failed. Please check your credentials.");
-        }
-    }
+		String email = loginView.getEmailTF().getText();
+	    String password = loginView.getPasswordTF().getText();
+        User.Userlogin(email, password);
+	}
 	
-	public boolean login(String email, String password) {
-        // Add your database interaction logic here
-        // For simplicity, we'll assume a hardcoded password for the email "test@example.com"
-        if ("test@example.com".equals(email) && "password".equals(password)) {
-            return true;
-        }
-        
-        return false;
-    }
+	private void movetoRegister() {
+		Stage primaryStage = new Stage();
+		RegisterView registerView = new RegisterView(primaryStage);
+		RegisterController regC = new RegisterController(registerView, users);
+		loginView.getSc().getWindow().hide();
+		primaryStage.show();
+	}
+	
+	private static void movetoCustomer() {
+		Stage primaryStage = new Stage();
+//		CustomerView customerView = new customerView(stage);
+//		CustomerController CusC = new customerView(customerView);
+//		loginView.getSc().getWindow().hide();
+//		primaryStage.show();
+	}
+	
+	private static void movetoAdmin() {
+		Stage primaryStage = new Stage();
+//		AdminView adminView = new adminView(stage);
+//		AdminController AdmC = new adminView(adminView);
+//		loginView.getSc().getWindow().hide();
+//		primaryStage.show();
+	}
+	
+
+	
+	
 }

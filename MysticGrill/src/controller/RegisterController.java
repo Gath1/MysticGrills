@@ -1,5 +1,10 @@
 package controller;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -9,44 +14,48 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import model.User;
+import view.LoginView;
 import view.RegisterView;
+import database.Connect;
 
 public class RegisterController {
+	private static RegisterView registerView;
+	private static ObservableList<User> users = FXCollections.observableArrayList();
 	
-	private RegisterView RegisterView;
-
-	public RegisterController(RegisterView View){
-		this.RegisterView = View;
-		validateRegisterForm();
-//		RegisterHandlerBtn();
-
+	
+	public RegisterController(RegisterView registerView, ObservableList<User> users){
+		this.registerView = registerView;
+		setButtonHandlers();
 	}
 		
-	public boolean validateRegisterForm() {
+	private void setButtonHandlers() {
+		registerView.getRegisterButton().setOnAction(e -> insertHandler());
 		
-		
-		System.out.println("Username: " + RegisterView.getUserTxt());
-		System.out.println("Email: " + RegisterView.getEmailTxt());
-	    System.out.println("Password: " + RegisterView.getPasswordTxt());
-	    System.out.println("ConfirmPassword: " + RegisterView.getConfpassTxt());
+	}
 
-	    if (RegisterView.getUserTxt().getText().isEmpty() || RegisterView.getEmailTxt().getText().isEmpty() || 
-	    	RegisterView.getPasswordTxt().getText().isEmpty() || RegisterView.getConfpassTxt().getText().isEmpty()) {
-	    	 return false;
-	    }
-	    return true;
+	public static void movetoLogin() {
+		Stage primaryStage = new Stage();
+		LoginView loginView = new LoginView(primaryStage);
+		LoginController logC = new LoginController(loginView, users);
+		registerView.getSc().getWindow().hide();
+		primaryStage.show();
 	}
 	
-
-	
-//	private void RegisterHandlerBtn() {
-//		RegisterView.getRegisterButton().setOnMouseClicked(e->{
-//			System.out.println("You Have Register Your Account");
-//			
-//			
-//		});
-//	}
-	
+	private void insertHandler() {
+		String username = registerView.getUserTxt().getText();
+		String email = registerView.getEmailTxt().getText();
+		String password = registerView.getPasswordTxt().getText();
+		String confirmPassword = registerView.getConfpassTxt().getText();
+		for(User users : users) {
+		if(username.equals(users.getUsername())) {
+			System.out.println("Please fill with unique name");
+			return;
+		}
+		User.UserRegister(username, email, password, confirmPassword);
+		}
+	}
 	
 	
 }
