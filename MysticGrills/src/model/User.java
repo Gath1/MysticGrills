@@ -1,91 +1,189 @@
 package model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import controller.LoginController;
+import controller.RegisterController;
 import database.Connect;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 public class User {
 	
-	private String UserID;
-	private String Username;
-	private String Email;
-	private String Password;
-	private String ConfirmPassword;
+	private String userID;
+	private String role;
+	private String username;
+	private String email;
+	private String password;
 	
-	public User(String userID, String username, String email, String password, String confirmPassword) {
-		UserID = userID;
-		Username = username;
-		Email = email;
-		Password = password;
-		ConfirmPassword = confirmPassword;
+	public User(String userID, String role, String username, String email, String password) {
+		super();
+		this.userID = userID;
+		this.role = role;
+		this.username = username;
+		this.email = email;
+		this.password = password;
 	}
 	
 	public static ArrayList<User> getAllUser(){
-		ArrayList<User> users = new ArrayList<>();
-//		Connect con = Connect.getInstance();
-		String query = "Select * FROM users";
+		ArrayList<User> user = new ArrayList<>();
+		String query = "Select * FROM user";
 		ResultSet rs = Connect.getConnection().executeQuery(query);
 		
 		try {
 			while(rs.next()) {
-				String userID = rs.getString("userid");
-				String username = rs.getString("username");
-				String email = rs.getString("email");
-				String password = rs.getString("password");
-				String confirmPassword = rs.getString("confirmpassword");	
+				String userID 	= rs.getString(1);
+				String role 	= rs.getString(2);
+				String username = rs.getString(3);
+				String email	= rs.getString(4);
+				String password = rs.getString(5);
 				
-				users.add(new User(userID, username, email, password, confirmPassword));
+				user.add(new User(userID, role, username, email, password));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return users;
+		return user;
 	}
 	
+	public static void UserRegister(String username, String email, String password, String confirmPassword) {
+		if(username.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty() || confirmPassword.trim().isEmpty()) {
+			showAlert("Every fields must be filled!!!");
+			return;
+		}
+		if(password.length() < 6) {
+			showAlert("Password must be filled at least 6 character!!!");
+			return;
+		}
+		if(!password.equals(confirmPassword)) {
+			showAlert("Confirm Password did not match");
+			return;
+		}
+		
+		String query = String.format("INSERT INTO user (userID, role, username, email, password) VALUES (NULL, 'Customer', '%s', '%s', '%s')", username, email, password, confirmPassword);
+		Connect.getConnection().executeUpdate(query);
+		showAlert("Your data have been registered");
+		RegisterController.movetoLogin();
+		
+	}
+	
+	public static void Userlogin(String email, String password) {
+		try {
+			String query ="SELECT * FROM user WHERE email = ? AND password = ?";
+			PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+			ps.setString(1, email);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				String role = rs.getString("role");
+				LoginController.showUserRole(role);
+			}
+			else {
+				showAlert("Your role cant be found");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void Userinsert(String role, String username, String email) {
+		String query = "INSERT INTO user (role, username, email) VALUES (?, ?, ?)";
+		try(PreparedStatement ps = Connect.getConnection().prepareStatement(query)){
+			ps.setString(1, role);
+			ps.setString(2, username);
+			ps.setString(3, email);
+			ps.executeUpdate();
+			showAlert("You data have been inserted.");
+		}catch (SQLException e) {
+			e.printStackTrace();
+			showAlert("Your data failed to be inserted");
+		}
+	}
+	
+	public static void Userupdate(String role, String username, String email) {
+		String query ="UPDATE user SET role = ?, email = ? WHERE username = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			
+			ps.setString(1, role);
+			ps.setString(2, email);
+			ps.setString(3, username);
+			ps.execute();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deleteUser(String username) {
+		String query ="DELETE FROM user WHERE username = ?";
+		PreparedStatement ps = Connect.getConnection().prepareStatement(query);
+		try {
+			ps.setString(1, username);
+			ps.execute();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void showAlert(String notif) {
+		Alert warn = new Alert(AlertType.INFORMATION);
+		warn.setTitle("Notification");
+		warn.setHeaderText(null);
+		warn.setContentText(notif);
+		warn.showAndWait();
+		
+	}
 
 	public String getUserID() {
-		return UserID;
+		return userID;
 	}
 
 	public void setUserID(String userID) {
-		UserID = userID;
+		this.userID = userID;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getUsername() {
-		return Username;
+		return username;
 	}
 
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
-	public String getConfirmPassword() {
-		return ConfirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		ConfirmPassword = confirmPassword;
-	}
+	
 	
 }

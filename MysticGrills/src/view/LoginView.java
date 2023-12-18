@@ -23,64 +23,69 @@ import controller.LoginController;
 
 public class LoginView {
 	
-	private TextField emailTF = new TextField();
-	private PasswordField passwordTF = new PasswordField();	
+	private TextField email = new TextField();
+	private PasswordField password = new PasswordField();	
 	private Button loginButton = new Button("Login");
 	private Button registerButton = new Button("Register");
-	private static VBox vbox, LoginLayout, RegisterLayout;
-	private LoginController loginController;
+	private VBox actionBox = new VBox(20);
 	
-	static StackPane root;
+	private BorderPane borderCnt = new BorderPane();
+	private GridPane gridCnt = new GridPane();
+	private FlowPane flowCnt = new FlowPane();
+	
+	Scene sc;
+	
+	private void createLoginForm() {
+		borderCnt.setCenter(gridCnt);
+		borderCnt.setBottom(actionBox);
+		
+		actionBox.getChildren().addAll(loginButton, registerButton);
+		
+		gridCnt.add(new Label("Email : "), 0, 0);
+		gridCnt.add(email, 1, 0);
+		gridCnt.add(new Label("Password : "), 0, 1);
+		gridCnt.add(password, 1, 1);
+		gridCnt.add(loginButton, 0, 2);
+		gridCnt.add(registerButton, 1, 2);
+		
+		sc = new Scene(borderCnt, 500, 500);
+	}
+	
+	private void setComponent() {
+		borderCnt.setAlignment(gridCnt, Pos.CENTER);
+		borderCnt.setMargin(actionBox, new Insets(10));
+		
+		actionBox.setAlignment(Pos.CENTER);
+		gridCnt.setAlignment(Pos.CENTER);
+		gridCnt.setVgap(20);
+	}
 	
 	public LoginView(Stage stage){
+		createLoginForm();
+		setComponent();
 		
-		VBox root = new VBox();
-		
-//		LoginView loginView = new LoginView(stage);
-//		Scene loginScene = new Scene(loginView.getVBox(), 400, 300);
-//		stage.setScene(loginScene);
-				
-		GridPane form = createLoginForm();
-		VBox.setMargin(form, new Insets(20));
-		root.getChildren().addAll(form);
-		
-		Scene scene = new Scene(root, 500, 250);
-		stage.setScene(scene);
 		stage.setTitle("Mystic Grills");
+		stage.setScene(sc);
+		stage.setResizable(false);
 		stage.show();
 		
 	}
 	
-	private GridPane createLoginForm() {
-		GridPane form = new GridPane();
-		form.setVgap(20);
-		form.setHgap(10);
-		
-		form.add(new Label("Email : "), 0, 0);
-		form.add(emailTF, 1, 0);
-		form.add(new Label("Password : "), 0, 1);
-		form.add(passwordTF, 1, 1);
-		form.add(loginButton, 0, 2);
-		form.add(registerButton, 1, 2);
-		
-		return form;
-	}
-	
 
-	public TextField getEmailTF() {
-		return emailTF;
+	public TextField getEmail() {
+		return email;
 	}
 
-	public void setEmailTF(TextField emailTF) {
-		this.emailTF = emailTF;
+	public void setEmail(TextField email) {
+		this.email = email;
 	}
 
-	public PasswordField getPasswordTF() {
-		return passwordTF;
+	public PasswordField getPassword() {
+		return password;
 	}
 
-	public void setPasswordTF(PasswordField passwordTF) {
-		this.passwordTF = passwordTF;
+	public void setPassword(PasswordField password) {
+		this.password = password;
 	}
 
 	public Button getLoginButton() {
@@ -98,7 +103,48 @@ public class LoginView {
 	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
 	}
+
+	public VBox getActionBox() {
+		return actionBox;
+	}
+
+	public void setActionBox(VBox actionBox) {
+		this.actionBox = actionBox;
+	}
+
+	public BorderPane getBorderCnt() {
+		return borderCnt;
+	}
+
+	public void setBorderCnt(BorderPane borderCnt) {
+		this.borderCnt = borderCnt;
+	}
+
+	public GridPane getGridCnt() {
+		return gridCnt;
+	}
+
+	public void setGridCnt(GridPane gridCnt) {
+		this.gridCnt = gridCnt;
+	}
+
+	public FlowPane getFlowCnt() {
+		return flowCnt;
+	}
+
+	public void setFlowCnt(FlowPane flowCnt) {
+		this.flowCnt = flowCnt;
+	}
+
+	public Scene getSc() {
+		return sc;
+	}
+
+	public void setSc(Scene sc) {
+		this.sc = sc;
+	}
+
+	
 	
 }
-
 

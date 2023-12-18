@@ -1,6 +1,7 @@
 package view;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,95 +17,96 @@ import main.Main;
 
 public class RegisterView{
 	
+	Scene sc;
+	private TextField username = new TextField();
+	private TextField email = new TextField();
+	private PasswordField password = new PasswordField();
+	private PasswordField confPass = new PasswordField();
+	private Button registerButton = new Button("Register");
+	private Button loginButton = new Button("Login");
+	private VBox actionBox = new VBox(20);
 	
-	private TextField userTxt = new TextField();
-	private TextField emailTxt = new TextField();
-	private PasswordField passwordTxt = new PasswordField();
-	private PasswordField confpassTxt = new PasswordField();
-	private static Button registerButton = new Button("Register");
-	private static VBox vbox, LoginLayout;
-	static StackPane root;
+	private BorderPane borderCnt = new BorderPane();
+	private GridPane gridCnt = new GridPane();
+	private FlowPane flowCnt = new FlowPane();
 	
-	public GridPane editComponent() {	
-		GridPane form = new GridPane();
-		form.setVgap(20);
-		form.setHgap(10);
+	
+	private void editComponent() {	
+		actionBox.getChildren().addAll(registerButton, loginButton);
+		borderCnt.setCenter(gridCnt);
+		borderCnt.setBottom(actionBox);
 		
-		form.add(new Label("Username : "), 0, 0);
-		form.add(userTxt, 1, 0);
-		form.add(new Label("Email : "), 0, 1);
-		form.add(emailTxt, 1, 1);
-		form.add(new Label("Password : "), 0, 2);
-		form.add(passwordTxt, 1, 2);
-		form.add(new Label("ConfirmPassword : "), 0, 3);
-		form.add(confpassTxt, 1, 3);	
-		form.add(registerButton, 1, 4);
+		gridCnt.add(new Label("Username : "), 0, 0);
+		gridCnt.add(username, 1, 0);
+		gridCnt.add(new Label("Email : "), 0, 1);
+		gridCnt.add(email, 1, 1);
+		gridCnt.add(new Label("Password : "), 0, 2);
+		gridCnt.add(password, 1, 2);
+		gridCnt.add(new Label("ConfirmPassword : "), 0, 3);
+		gridCnt.add(confPass, 1, 3);	
 		
-//		getRegisterButton().setOnMouseClicked(e->{
-//			System.out.println("You Have Register Your Account");
-//			root.getChildren().clear();
-//			root.getChildren().add(moveToLogin());
-//		});
-//		
-		return form;
+		sc = new Scene(borderCnt, 500, 500);
 	}
 	
-//	static VBox moveToLogin() {
-//		LoginLayout = new VBox();
-//		Label LoginLbl = new Label("Login");
-//		LoginLayout.getChildren().add(LoginLbl);
-//		
-//		return LoginLayout;
-//	}
+	private void setComponent() {
+		BorderPane.setAlignment(gridCnt, Pos.CENTER);
+		
+		BorderPane.setMargin(actionBox, new Insets(10));
+		actionBox.setAlignment(Pos.CENTER);
+		
+		gridCnt.setAlignment(Pos.CENTER);
+		gridCnt.setVgap(10);
+		
+	}
 	
 
 	public RegisterView(Stage stage) {	
+		editComponent();
+		setComponent();
 		
-		vbox = new VBox();
-		
-		GridPane form = editComponent();
-		VBox.setMargin(form, new Insets(20));
-		vbox.getChildren().addAll(form);
-		
-		root = new StackPane();
-		root.getChildren().add(vbox);
-		
-		Scene scene = new Scene(root, 500,250);
-		stage.setScene(scene);
-		stage.setTitle("Mystic Grills");
+		stage.setScene(sc);
+		stage.setResizable(false);
 		stage.show();
 	}
 	
-	public TextField getUserTxt() {
-		return userTxt;
+	public Scene getSc() {
+		return sc;
 	}
 
-	public void setUserTxt(TextField userTxt) {
-		this.userTxt = userTxt;
+	public void setSc(Scene sc) {
+		this.sc = sc;
 	}
 
-	public TextField getEmailTxt() {
-		return emailTxt;
+	public TextField getusername() {
+		return username;
 	}
 
-	public void setEmailTxt(TextField emailTxt) {
-		this.emailTxt = emailTxt;
+	public void setusername(TextField username) {
+		this.username = username;
 	}
 
-	public PasswordField getPasswordTxt() {
-		return passwordTxt;
+	public TextField getemail() {
+		return email;
 	}
 
-	public void setPasswordTxt(PasswordField passwordTxt) {
-		this.passwordTxt = passwordTxt;
+	public void setemail(TextField email) {
+		this.email = email;
 	}
 
-	public PasswordField getConfpassTxt() {
-		return confpassTxt;
+	public PasswordField getpassword() {
+		return password;
 	}
 
-	public void setConfpassTxt(PasswordField confpassTxt) {
-		this.confpassTxt = confpassTxt;
+	public void setpassword(PasswordField password) {
+		this.password = password;
+	}
+
+	public PasswordField getconfPass() {
+		return confPass;
+	}
+
+	public void setconfPass(PasswordField confPass) {
+		this.confPass = confPass;
 	}
 
 	public Button getRegisterButton() {
@@ -113,6 +115,46 @@ public class RegisterView{
 
 	public void setRegisterButton(Button registerButton) {
 		this.registerButton = registerButton;
+	}
+
+	public Button getLoginButton() {
+		return loginButton;
+	}
+
+	public void setLoginButton(Button loginButton) {
+		this.loginButton = loginButton;
+	}
+
+	public VBox getActionBox() {
+		return actionBox;
+	}
+
+	public void setActionBox(VBox actionBox) {
+		this.actionBox = actionBox;
+	}
+
+	public BorderPane getBorderCnt() {
+		return borderCnt;
+	}
+
+	public void setBorderCnt(BorderPane borderCnt) {
+		this.borderCnt = borderCnt;
+	}
+
+	public GridPane getGridCnt() {
+		return gridCnt;
+	}
+
+	public void setGridCnt(GridPane gridCnt) {
+		this.gridCnt = gridCnt;
+	}
+
+	public FlowPane getFlowCnt() {
+		return flowCnt;
+	}
+
+	public void setFlowCnt(FlowPane flowCnt) {
+		this.flowCnt = flowCnt;
 	}
 	
 }
