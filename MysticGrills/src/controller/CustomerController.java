@@ -24,7 +24,7 @@ public class CustomerController {
 	private void setButtonHandlers() {
 		customerView.getMenuButton().setOnAction(e -> movetocustomerMenu());
 		customerView.getCartButton().setOnAction(e -> movetocustomerCart());
-		customerView.getCloseButton().setOnAction(e -> movetoLogin());
+		customerView.getLogoutButton().setOnAction(e -> movetoLogin());
 	}
 	
 	void movetocustomerMenu() {

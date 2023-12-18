@@ -7,6 +7,8 @@ import model.Menu;
 import model.User;
 import view.AdminView;
 import view.LoginView;
+import view.AdminMenuManagementView;
+import view.AdminUserManagementView;
 
 public class AdminController {
 	private AdminView adminView;
@@ -20,6 +22,26 @@ public class AdminController {
 	
 	private void setButtonHandlers() {
 		adminView.getCloseButton().setOnAction(e -> movetoLogin());
+		adminView.getMenuButton().setOnAction(e -> handleMenu());
+		adminView.getUserButton().setOnAction(e -> handleUser());
+	}
+	
+	void handleUser() {
+		Stage stage = new Stage();
+		AdminUserManagementView adminUserMgmt 		= new AdminUserManagementView(stage);
+		AdminUserManagementController adminUserMgmtCont = new AdminUserManagementController(adminUserMgmt, users);
+		
+		adminView.getScene().getWindow().hide();
+		stage.show();
+	}
+	
+	void handleMenu() {
+		Stage stage = new Stage();
+		AdminMenuManagementView AdminMenuMgmtView 		= new AdminMenuManagementView(stage);
+		AdminMenuManagementController AdminMenuMgmtCont = new AdminMenuManagementController(AdminMenuMgmtView, menus);
+		
+		adminView.getScene().getWindow().hide();
+		stage.show();
 	}
 	
 	void movetoLogin() {

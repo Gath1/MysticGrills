@@ -32,7 +32,7 @@ public class CustomerCartController {
 	
 	void loadTableData() {
 		orders.clear();
-//		orders.addAll(Order.getOrder(orderList));
+//		orders.addAll(Order.showOrder(orderList));
 		ccov.getTable().setItems(orders);
 	}
 

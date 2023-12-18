@@ -38,6 +38,13 @@ public class AdminView {
 		stage.show();
 	}
 
+	public Scene getScene() {
+		return sc;
+	}
+
+	public void setScene(Scene scene) {
+		this.sc = scene;
+	}
 	public Button getMenuButton() {
 		return menuButton;
 	}

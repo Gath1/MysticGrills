@@ -15,18 +15,18 @@ public class CustomerView {
 	
 	private Button menuButton = new Button("View Menu");	
 	private Button cartButton = new Button("View Cart");	
-	private Button closeButton = new Button("Close");
+	private Button logoutButton = new Button("LogOut");
 	private VBox actionBox = new VBox(20);
 	private BorderPane borderCnt = new BorderPane();
 	Scene sc;
 	
 	private void editComponent() {
 		borderCnt.setCenter(actionBox);
-		borderCnt.setBottom(closeButton);
+		borderCnt.setBottom(logoutButton);
 		
 		actionBox.getChildren().addAll(menuButton, cartButton);
 		
-		BorderPane.setAlignment(closeButton, Pos.CENTER);
+		BorderPane.setAlignment(logoutButton, Pos.CENTER);
 		BorderPane.setMargin(actionBox, new Insets(10));
 		
 		actionBox.setAlignment(Pos.CENTER);
@@ -59,12 +59,12 @@ public class CustomerView {
 		this.cartButton = cartButton;
 	}
 
-	public Button getCloseButton() {
-		return closeButton;
+	public Button getLogoutButton() {
+		return logoutButton;
 	}
 
-	public void setCloseButton(Button closeButton) {
-		this.closeButton = closeButton;
+	public void setLogoutButton(Button logoutButton) {
+		this.logoutButton = logoutButton;
 	}
 
 	public VBox getActionBox() {

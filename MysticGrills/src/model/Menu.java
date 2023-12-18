@@ -57,7 +57,7 @@ public class Menu {
 	        return;
 	    }
 	    
-	    String query ="INSERT INTO menus (menuName, menuPrice) VALUES (?, ?)";
+	    String query ="INSERT INTO menu (menuName, menuPrice) VALUES (?, ?)";
 	    try (PreparedStatement ps = Connect.getConnection().prepareStatement(query)) {
 	        ps.setString(1, menuName);
 	        ps.setBigDecimal(2, menuPrice);

@@ -80,12 +80,15 @@ public class User {
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			if(email.isEmpty() || password.isEmpty()) {
+				showAlert("Email or Password must be filled!");
+			}
+			else if(rs.next()) {
 				String role = rs.getString("role");
 				LoginController.showUserRole(role);
 			}
 			else {
-				showAlert("Your role cant be found");
+				showAlert("Invalid Email or Password");
 			}
 			
 		}catch(SQLException e) {
